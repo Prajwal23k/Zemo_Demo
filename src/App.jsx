@@ -3,16 +3,90 @@ import './App.css';
 import logo from './assets/logo.svg';
 import Tournament from './components/Tournament';
 import ZemoSuite from './components/ZemoSuite';
+import TournamentManagement from './components/TournamentManagement';
+import LiveScoring from './components/LiveScoring';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
+
+  // Add certificate form state if needed
+  const [certificateType, setCertificateType] = useState('');
+  const [options, setOptions] = useState({
+    includeLogo: false,
+    includeSignature: false,
+  });
 
   const renderContent = () => {
-    switch(currentPage) {
+    switch (currentPage) {
       case 'tournaments':
         return <Tournament />;
       case 'zemo-suite':
         return <ZemoSuite />;
+      case 'tournament-management': // Add routing for Tournament Management
+        return <TournamentManagement />;
+      case 'live-scoring': // Add routing for Live Scoring
+        return <LiveScoring />;
+      case 'terms':
+        return <div className="page-content"><h2>Terms & Conditions</h2><p>Terms & Conditions page content goes here.</p></div>;
+      case 'privacy':
+        return <div className="page-content"><h2>Privacy Policy</h2><p>Privacy Policy page content goes here.</p></div>;
+      case 'refund':
+        return <div className="page-content"><h2>Refund Policy</h2><p>Refund Policy page content goes here.</p></div>;
+      case 'contact':
+        return <div className="page-content"><h2>Contact Us</h2><p>Contact Us page content goes here.</p></div>;
+      case 'certificate-generation':
+        return (
+          <div className="page-content">
+            <h2>Certificate Generation</h2>
+            <form>
+              <div>
+                <label>
+                  <input
+                    type="radio"
+                    name="certificateType"
+                    value="participation"
+                    checked={certificateType === 'participation'}
+                    onChange={() => setCertificateType('participation')}
+                  />
+                  Participation Certificate
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="certificateType"
+                    value="winner"
+                    checked={certificateType === 'winner'}
+                    onChange={() => setCertificateType('winner')}
+                  />
+                  Winner Certificate
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={options.includeLogo}
+                    onChange={() =>
+                      setOptions({ ...options, includeLogo: !options.includeLogo })
+                    }
+                  />
+                  Include Logo
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={options.includeSignature}
+                    onChange={() =>
+                      setOptions({ ...options, includeSignature: !options.includeSignature })
+                    }
+                  />
+                  Include Signature
+                </label>
+              </div>
+            </form>
+          </div>
+        );
       default:
         return (
           <>
@@ -113,10 +187,56 @@ function App() {
         </div>
 
         <ul className="navbar-menu">
-          <li className={currentPage === 'home' ? 'active' : ''} onClick={() => setCurrentPage('home')}>Home</li>
-          <li>Solutions</li>
-          <li className={currentPage === 'zemo-suite' ? 'active' : ''} onClick={() => setCurrentPage('zemo-suite')}>Zemo Suite</li>
-          <li className={currentPage === 'tournaments' ? 'active' : ''} onClick={() => setCurrentPage('tournaments')}>Tournaments</li>
+          <li
+            className={currentPage === 'home' ? 'active' : ''}
+            onClick={() => setCurrentPage('home')}
+          >
+            Home
+          </li>
+          <li
+            className="dropdown"
+            onMouseEnter={() => setDropdownVisible(true)}   // Show dropdown on hover
+            onMouseLeave={() => setDropdownVisible(false)}  // Hide dropdown when mouse leaves
+          >
+            Solutions
+            {isDropdownVisible && (
+              <ul className="dropdown-menu">
+                <li onClick={() => setCurrentPage('tournament-management')}>
+                  Tournament Management
+                </li>
+                <li onClick={() => setCurrentPage('live-scoring')}>
+                  Live Scoring
+                </li>
+                <li onClick={() => setCurrentPage('certificate-generation')}>
+                  Certificate Generation
+                </li>
+                <li onClick={() => setCurrentPage('creative-making')}>
+                  Creative Making
+                </li>
+                <li onClick={() => setCurrentPage('bib-management')}>
+                  Bib Management
+                </li>
+                <li onClick={() => setCurrentPage('auction-bay')}>
+                  Auction Bay
+                </li>
+                <li onClick={() => setCurrentPage('contact-us')}>
+                  Contact Us
+                </li>
+              </ul>
+            )}
+          </li>
+          <li
+            className={currentPage === 'zemo-suite' ? 'active' : ''}
+            onClick={() => setCurrentPage('zemo-suite')}
+          >
+            Zemo Suite
+          </li>
+          <li
+            className={currentPage === 'tournaments' ? 'active' : ''}
+            onClick={() => setCurrentPage('tournaments')}
+          >
+            Tournaments
+          </li>
         </ul>
 
         <div className="navbar-actions">
@@ -138,10 +258,10 @@ function App() {
             <div>
               <h4>USEFUL LINKS</h4>
               <ul>
-                <li>Terms & Conditions</li>
-                <li>Privacy Policy</li>
-                <li>Refund Policy</li>
-                <li>Contact Us</li>
+                <li onClick={() => setCurrentPage('terms')} style={{cursor: 'pointer'}}>Terms & Conditions</li>
+                <li onClick={() => setCurrentPage('privacy')} style={{cursor: 'pointer'}}>Privacy Policy</li>
+                <li onClick={() => setCurrentPage('refund')} style={{cursor: 'pointer'}}>Refund Policy</li>
+                <li onClick={() => setCurrentPage('contact')} style={{cursor: 'pointer'}}>Contact Us</li>
               </ul>
             </div>
             <div>
@@ -170,4 +290,4 @@ function App() {
   );
 }
 
-export default App; 
+export default App;
