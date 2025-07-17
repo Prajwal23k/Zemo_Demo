@@ -45,5 +45,29 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+
+    <!-- Solutions Button -->
+    <nav>
+      <button id="solutions-button">Solutions</button>
+      <ul id="solutions-menu" style="display: none; list-style: none; padding: 0;">
+        <li><a href="#tournament-management">Tournament Management</a></li>
+        <li><a href="#live-scoring">Live Scoring</a></li>
+        <li><a href="#certificate-generation">Certificate Generation</a></li>
+        <li><a href="#creative-making">Creative Making</a></li>
+        <li><a href="#bib-management">Bib Management</a></li>
+        <li><a href="#auction-bay">Auction Bay</a></li>
+        <li><a href="#contact-us">Contact Us</a></li>
+      </ul>
+    </nav>
+
+    <script>
+      // JavaScript to toggle the dropdown menu
+      const solutionsButton = document.getElementById('solutions-button');
+      const solutionsMenu = document.getElementById('solutions-menu');
+
+      solutionsButton.addEventListener('click', () => {
+        solutionsMenu.style.display = solutionsMenu.style.display === 'none' ? 'block' : 'none';
+      });
+    </script>
   </body>
 </html>
